@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="search-city-container">
-      <form action="/submit" method="GET">
+      <form action="/submit" method="POST">
         <input
           type="text"
           name="cityName"
@@ -19,11 +19,30 @@
         <input type="submit" value="Search" />
       </form>
 
-      <%if(locals.cityName){ %>
-      <p><%=cityName %></p>
+      <!--
+      <%if(locals.latitude && locals.longitude){ %>
+      <p><%=latitude %> <%=longitude %> <%=city %> <%=state %></p>
       <% }else{ %>
-      <p><%= wait %></p>
+      <p>NO CITY FOUND</p>
+
       <%} %>
+      -->
+
+      <% if (locals.city && locals.state) { %>
+      <form action="/post-city" method="POST">
+        <!-- Hidden inputs to pass city and state -->
+        <input type="hidden" name="city" value="<%= city %>" />
+        <input type="hidden" name="state" value="<%= state %>" />
+        <input type="hidden" name="latitude" value="<%= latitude %>" />
+        <input type="hidden" name="longitude" value="<%= longitude %>" />
+
+        <!-- Display the city and state on the button -->
+        <button type="submit">
+          <h1><%= city %></h1>
+          <h3><%= state %></h3>
+        </button>
+      </form>
+      <% } %>
 
       <!-- <form action="/get" method="POST">
         <button>
