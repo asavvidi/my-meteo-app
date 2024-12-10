@@ -50,7 +50,94 @@
           <h3>Central Macedonia , Greece</h3>
         </button>
       </form>-->
-    </div>
+
+      <% if (locals.weather) { %>
+      <div class="weather-card-container">
+        <div class="city-information">
+          <h1><%=cityName %> (<%=stateName %>) , <%=weather.sys.country %></h1>
+          <p><%=currentDate %></p>
+        </div>
+        <div class="weather-details-container">
+          <div class="weather-image-container">
+            <img
+              src="assets/images/weather-news.png"
+              alt="A weather icon"
+              width="200px"
+              height="150px"
+            />
+          </div>
+          <div class="border"></div>
+
+          <div class="weather-details">
+            <div>
+              <h3><%= weather.main.temp %>°C</h3>
+              <p>Temperature</p>
+            </div>
+            <div>
+              <h3><%= weather.weather[0].description %></h3>
+              <p>Weather</p>
+            </div>
+            <div>
+              <h3><%= weather.weather.main %></h3>
+            </div>
+            <div>
+              <h3><%= weather.wind.speed %></h3>
+              <p>Wind(miles/h)</p>
+            </div>
+            <div>
+              <h3><%= weather.main.feels_like %>°C</h3>
+              <p>Feels like</p>
+            </div>
+            <div>
+              <h3><%= weather.main.sea_level %></h3>
+              <p>Sea level</p>
+            </div>
+
+            <div>
+              <h3><%= weather.main.temp_max %>°C</h3>
+              <p>Max Temperature</p>
+            </div>
+            <div>
+              <h3><%= weather.main.temp_min %>°C</h3>
+              <p>Min Temperature</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="more-details">
+          <div>
+            <h3><%= weather.coord.lat %></h3>
+            <p>Latitude</p>
+          </div>
+          <div>
+            <h3><%= weather.coord.lon %></h3>
+            <p>Longitude</p>
+          </div>
+          <div>
+            <h3><%= weather.clouds.all %>%</h3>
+            <p>Cloud</p>
+          </div>
+          <div>
+            <h3><%= weather.main.humidity %>%</h3>
+            <p>Humidity</p>
+          </div>
+          <div>
+            <h3><%= weather.main.pressure %> mb</h3>
+            <p>Pressure(millibars)</p>
+          </div>
+        </div>
+      </div>
+      <% } %>
+      <!--
+      <div class="weather-card-container">
+        <div class="city-information">
+          <h1>Thessaloniki (Central Macedonia) , Greece</h1>
+          <p>10 December 2024, 4:24 PM (Tuesday)</p>
+        </div>
+        <div class="weather-details"></div>
+        <div class="more-details"></div>
+      </div>
+    --></div>
 
     <%- include('partials/footer.ejs') %>
   </body>

@@ -64,6 +64,7 @@ body {
   margin: 0 auto;
   border: none;
   padding: 1rem 2rem;
+  cursor: pointer;
 }
 
 .search-city-container > form > input[type="text"] {
@@ -92,4 +93,63 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
+}
+
+.weather-card-container {
+  width: 100%;
+  background-color: #038aff;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+}
+.city-information {
+  color: white;
+}
+
+.weather-details-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-image-container {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-radius: 2rem;
+}
+
+.border {
+  height: 150px;
+  border-left: 4px solid white;
+  margin-left: 2rem;
+}
+
+.weather-details {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 1rem;
+  gap: 1rem;
+}
+.weather-details > div {
+  padding: 0.5rem 1rem;
+  color: white;
+}
+
+.more-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  background-color: #efeff0;
+  border-radius: 2rem;
 }

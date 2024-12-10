@@ -45,6 +45,52 @@ app.post("/submit", async (req, res) => {
   }
 });
 
+app.post("/post-city", async (req, res) => {
+  const latitude = req.body["latitude"];
+  const longitude = req.body["longitude"];
+
+  const cityName = req.body["city"];
+  const stateName = req.body["state"];
+
+  try {
+    const response = await axios.get(
+      "https://api.openweathermap.org/data/2.5/weather",
+      {
+        params: {
+          lat: latitude,
+          lon: longitude,
+          appid: API_KEY,
+          units: "metric",
+        },
+      }
+    );
+
+    const weatherData = response.data;
+
+    const timezoneOffset = weatherData.timezone; // Offset in seconds
+    const localDate = new Date(Date.now()); // Adjust the time
+
+    const currentDate = localDate.toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    res.render("index.ejs", {
+      weather: weatherData,
+      cityName: cityName,
+      stateName: stateName,
+      currentDate: currentDate,
+    });
+  } catch (error) {
+    console.log("Error fetching data from OpenWeatherMap:", error);
+    res.status(500).send("Error fetching data");
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
