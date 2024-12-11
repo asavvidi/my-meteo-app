@@ -19,37 +19,24 @@
         <input type="submit" value="Search" />
       </form>
 
-      <!--
-      <%if(locals.latitude && locals.longitude){ %>
-      <p><%=latitude %> <%=longitude %> <%=city %> <%=state %></p>
-      <% }else{ %>
-      <p>NO CITY FOUND</p>
+      <div class="show-city-options">
+        <% if (locals.cities) { %> <%cities.forEach((cities)=>{%>
+        <form action="/post-city" method="POST">
+          <!-- Hidden inputs to pass city and state -->
+          <input type="hidden" name="city" value="<%= cities.name %>" />
+          <input type="hidden" name="state" value="<%= cities.state %>" />
+          <input type="hidden" name="latitude" value="<%= cities.lat %>" />
+          <input type="hidden" name="longitude" value="<%= cities.lon %>" />
 
-      <%} %>
-      -->
+          <!-- Display the city and state on the button -->
+          <button type="submit">
+            <h1><%= cities.name %></h1>
+            <h3><%= cities.state %></h3>
+          </button>
+        </form>
 
-      <% if (locals.city && locals.state) { %>
-      <form action="/post-city" method="POST">
-        <!-- Hidden inputs to pass city and state -->
-        <input type="hidden" name="city" value="<%= city %>" />
-        <input type="hidden" name="state" value="<%= state %>" />
-        <input type="hidden" name="latitude" value="<%= latitude %>" />
-        <input type="hidden" name="longitude" value="<%= longitude %>" />
-
-        <!-- Display the city and state on the button -->
-        <button type="submit">
-          <h1><%= city %></h1>
-          <h3><%= state %></h3>
-        </button>
-      </form>
-      <% } %>
-
-      <!-- <form action="/get" method="POST">
-        <button>
-          <h1>Thessaloniki</h1>
-          <h3>Central Macedonia , Greece</h3>
-        </button>
-      </form>-->
+        <% }) %> <% } %>
+      </div>
 
       <% if (locals.weather) { %>
       <div class="weather-card-container">
@@ -128,16 +115,7 @@
         </div>
       </div>
       <% } %>
-      <!--
-      <div class="weather-card-container">
-        <div class="city-information">
-          <h1>Thessaloniki (Central Macedonia) , Greece</h1>
-          <p>10 December 2024, 4:24 PM (Tuesday)</p>
-        </div>
-        <div class="weather-details"></div>
-        <div class="more-details"></div>
-      </div>
-    --></div>
+    </div>
 
     <%- include('partials/footer.ejs') %>
   </body>

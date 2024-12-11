@@ -1,43 +1,50 @@
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
 const port = 3000;
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let API_KEY = "c59d61fb5400026251cf50b3edf6f44e";
+const API_KEY = process.env.API_KEY;
 
+// Route to render the home page
 app.get("/", (req, res) => {
   res.render("index.ejs", { wait: "Waiting for the city name..." });
 });
 
+// Route to handle city search form submissions
 app.post("/submit", async (req, res) => {
   const cityName = req.body["cityName"];
   try {
+    //Use the Geocoding API to retrieve the lat and lon of the city
     const response = await axios.get(
       "http://api.openweathermap.org/geo/1.0/direct",
       {
         params: {
-          q: `${cityName},GR`,
+          q: `${cityName}`,
           appid: API_KEY,
         },
       }
     );
 
-    const location = response.data[0];
-    const lat = location.lat;
-    const lon = location.lon;
-    const city = location.name;
-    const state = location.state;
+    const locations = response.data;
 
+    const cities = locations.map((location) => ({
+      name: location.name,
+      state: location.state,
+      country: location.country,
+      lat: location.lat,
+      lon: location.lon,
+    }));
+
+    //Render the index page with a list of the matching cities
     res.render("index.ejs", {
-      latitude: lat,
-      longitude: lon,
-      city: city,
-      state: state,
+      cities: cities,
     });
   } catch (error) {
     console.error("Error fetching data from OpenWeatherMap:", error);
@@ -45,6 +52,7 @@ app.post("/submit", async (req, res) => {
   }
 });
 
+// Route to handle weather data requests for a selected city
 app.post("/post-city", async (req, res) => {
   const latitude = req.body["latitude"];
   const longitude = req.body["longitude"];
@@ -54,6 +62,7 @@ app.post("/post-city", async (req, res) => {
 
   try {
     const response = await axios.get(
+      //Fetch the weather data of the city using OpenWeatherMap API
       "https://api.openweathermap.org/data/2.5/weather",
       {
         params: {
@@ -79,6 +88,7 @@ app.post("/post-city", async (req, res) => {
       minute: "2-digit",
     });
 
+    // Render the index page with weather data and city details
     res.render("index.ejs", {
       weather: weatherData,
       cityName: cityName,

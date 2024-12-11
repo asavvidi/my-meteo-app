@@ -76,7 +76,14 @@ body {
   width: 80%;
 }
 
-.search-city-container > form[action="/post-city"] {
+.show-city-options {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.show-city-options > form[action="/post-city"] {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -85,7 +92,7 @@ body {
   width: 100%;
 }
 
-.search-city-container > form[action="/post-city"] > button {
+.show-city-options > form[action="/post-city"] > button {
   padding: 2rem 4rem;
   border-radius: 2rem;
   border: 4px solid #d9d9d9;
